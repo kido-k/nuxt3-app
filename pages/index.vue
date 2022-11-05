@@ -19,6 +19,7 @@
 <script setup lang="ts">
 definePageMeta({
   layout: "top",
+  middleware: "auth",
 });
 
 const projects: { id: number; name: string }[] = [
