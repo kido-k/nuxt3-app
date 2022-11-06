@@ -19,20 +19,20 @@
 
 <script setup lang="ts">
 const form = ref(true)
-const loginEmail = ref("");
-const loginPassword = ref("");
+const loginEmail = ref('')
+const loginPassword = ref('')
 
 const sendLoginForm = async () => {
-  const { signIn } = useAuth();
-  const result: any = await signIn(loginEmail.value, loginPassword.value)
+  const { signIn } = useAuth()
+  const result = await signIn(loginEmail.value, loginPassword.value)
   if (result === true) {
-    const to = useRoute().redirectedFrom?.fullPath || "/"
+    const to = useRoute().redirectedFrom?.fullPath || '/'
     navigateTo(to, { redirectCode: 302 })
   } else {
-    alert("firebase authorization error")
+    alert('firebase authorization error')
     console.error(result)
   }
-};
+}
 </script>
 
 <style lang="scss">

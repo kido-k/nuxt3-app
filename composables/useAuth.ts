@@ -6,6 +6,7 @@ import {
 } from 'firebase/auth'
 
 export const useAuth = () => {
+
   const token = useState<string | null>('token', () => null)
 
   async function signIn(email: string, password: string) {

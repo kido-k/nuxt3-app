@@ -1,63 +1,47 @@
 <template>
   <v-container>
-    <v-row class="projects">
-      <v-col
-        v-for="project in projects"
-        :key="project.id"
-        cols="12"
-        sm="4"
-        class="projects__col"
-      >
-        <v-card class="projects__col__card" @click="transitionPage(project.id)">
-          <v-card-title>{{ project.name }}</v-card-title>
-        </v-card>
-      </v-col>
-    </v-row>
+    <client-only>
+      <v-row v-if="projects.length > 0" class="projects">
+        <v-col
+          v-for="project in projects"
+          :key="project.projectId"
+          cols="12"
+          sm="4"
+          class="projects__col"
+        >
+          <v-card
+            class="projects__col__card"
+            @click="transitionPage(project.projectId)"
+          >
+            <v-card-title>{{ project.setting.name }}</v-card-title>
+          </v-card>
+        </v-col>
+      </v-row>
+    </client-only>
   </v-container>
 </template>
 
 <script setup lang="ts">
 definePageMeta({
-  layout: "top",
-  middleware: "auth",
+  layout: 'top',
+  middleware: 'auth',
 })
 
-const projects: { id: number; name: string }[] = [
-  {
-    id: 0,
-    name: "1 project",
-  },
-  {
-    id: 1,
-    name: "2 project",
-  },
-  {
-    id: 2,
-    name: "3 project",
-  },
-  {
-    id: 3,
-    name: "4 project",
-  },
-  {
-    id: 4,
-    name: "5 project",
-  },
-  {
-    id: 5,
-    name: "6 project",
-  },
-  {
-    id: 6,
-    name: "7 project",
-  },
-  {
-    id: 7,
-    name: "8 project",
-  },
-]
+interface Project {
+  projectId: string
+  setting: {
+    name: string
+    timestamp: string
+  }
+}
 
-function transitionPage(projectId: number) {
+let projects: Project[] = []
+if (!process.server) {
+  const { getFieldData } = useFirestore()
+  projects = await getFieldData('project')
+}
+
+function transitionPage(projectId: string) {
   navigateTo({
     path: `/project/${projectId}`,
   })

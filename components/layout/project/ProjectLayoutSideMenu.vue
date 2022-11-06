@@ -1,7 +1,7 @@
 <template>
   <div model-value class="layouts-side-menu">
     <template v-for="(item, index) in layoutSideMenuItems" :key="index">
-      <v-btn @click="transitionPage(item)" class="layouts-side-menu__button">
+      <v-btn class="layouts-side-menu__button" @click="transitionPage(item)">
         <v-icon>{{ item.icon }}</v-icon>
       </v-btn>
     </template>

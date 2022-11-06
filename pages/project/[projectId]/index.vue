@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 definePageMeta({
-  layout: "project",
+  layout: 'project',
 })
 
 const route = useRoute()
