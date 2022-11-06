@@ -18,19 +18,19 @@
 </template>
 
 <script setup lang="ts">
-const form = ref(true);
+const form = ref(true)
 const loginEmail = ref("");
 const loginPassword = ref("");
 
 const sendLoginForm = async () => {
   const { signIn, token } = useAuth();
-  const result: any = await signIn(loginEmail.value, loginPassword.value);
+  const result: any = await signIn(loginEmail.value, loginPassword.value)
   if (result === true) {
-    const to = useRoute().redirectedFrom?.fullPath || "/";
-    navigateTo(to, { redirectCode: 302 });
+    const to = useRoute().redirectedFrom?.fullPath || "/"
+    navigateTo(to, { redirectCode: 302 })
   } else {
-    alert("firebase authorization error");
-    console.error(result);
+    alert("firebase authorization error")
+    console.error(result)
   }
 };
 </script>

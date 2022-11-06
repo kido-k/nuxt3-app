@@ -12,24 +12,24 @@
 
 <script setup lang="ts">
 interface Props {
-  modelValue: string;
+  modelValue: string
 }
 
 interface Emits {
-  (e: "update:modelValue", newValue: string): void;
+  (e: "update:modelValue", newValue: string): void
 }
 
-const props = defineProps<Props>();
-const emit = defineEmits<Emits>();
+const props = defineProps<Props>()
+const emit = defineEmits<Emits>()
 
 const value = computed({
   get(): string {
-    return props.modelValue;
+    return props.modelValue
   },
   set(value: string) {
-    emit("update:modelValue", value);
+    emit("update:modelValue", value)
   },
-});
+})
 </script>
 
 <style lang="scss"></style>

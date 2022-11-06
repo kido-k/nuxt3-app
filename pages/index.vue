@@ -20,7 +20,7 @@
 definePageMeta({
   layout: "top",
   middleware: "auth",
-});
+})
 
 const projects: { id: number; name: string }[] = [
   {
@@ -55,12 +55,12 @@ const projects: { id: number; name: string }[] = [
     id: 7,
     name: "8 project",
   },
-];
+]
 
 function transitionPage(projectId: number) {
   navigateTo({
     path: `/project/${projectId}`,
-  });
+  })
 }
 </script>
 

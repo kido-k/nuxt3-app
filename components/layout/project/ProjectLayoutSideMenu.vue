@@ -13,12 +13,12 @@ const layoutSideMenuItems: { name: string; icon: string }[] = [
   { name: "one", icon: "mdi-square" },
   { name: "two", icon: "mdi-circle" },
   { name: "three", icon: "mdi-triangle" },
-];
+]
 
 function transitionPage(tab: { name: string; icon: string }) {
   navigateTo({
     path: `${tab.name}`,
-  });
+  })
 }
 </script>
 
