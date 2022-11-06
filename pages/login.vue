@@ -8,12 +8,6 @@
 definePageMeta({
   layout: "login",
 });
-
-function transitionPage(projectId: number) {
-  navigateTo({
-    path: `/project/${projectId}`,
-  });
-}
 </script>
 
 <style lang="scss" scoped>

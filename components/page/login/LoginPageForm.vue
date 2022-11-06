@@ -23,7 +23,7 @@ const loginEmail = ref("");
 const loginPassword = ref("");
 
 const sendLoginForm = async () => {
-  const { signIn, token } = useAuth();
+  const { signIn } = useAuth();
   const result: any = await signIn(loginEmail.value, loginPassword.value)
   if (result === true) {
     const to = useRoute().redirectedFrom?.fullPath || "/"
