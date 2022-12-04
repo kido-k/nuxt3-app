@@ -1,22 +1,10 @@
 <template>
-  <v-container>
+  <v-container class="top-page">
     <client-only>
-      <v-row v-if="projects.length > 0" class="projects">
-        <v-col
-          v-for="project in projects"
-          :key="project.projectId"
-          cols="12"
-          sm="4"
-          class="projects__col"
-        >
-          <v-card
-            class="projects__col__card"
-            @click="transitionPage(project.projectId)"
-          >
-            <v-card-title>{{ project.setting.name }}</v-card-title>
-          </v-card>
-        </v-col>
-      </v-row>
+      <page-top-page-projects
+        :projects="projects"
+        @update-projects="updateProjects"
+      />
     </client-only>
   </v-container>
 </template>
@@ -27,33 +15,20 @@ definePageMeta({
   middleware: 'auth',
 })
 
-interface Project {
-  projectId: string
-  setting: {
-    name: string
-    timestamp: string
-  }
-}
-
 let projects: Project[] = []
 if (!process.server) {
-  const { getFieldData } = useFirestore()
-  projects = await getFieldData('project')
+  await updateProjects()
 }
 
-function transitionPage(projectId: string) {
-  navigateTo({
-    path: `/project/${projectId}`,
-  })
+async function updateProjects() {
+  const { getProjects, setProjects } = useProjects()
+  await setProjects()
+  projects = await getProjects()
 }
 </script>
 
 <style lang="scss" scoped>
-.projects {
-  &__col {
-    &__card {
-      height: 300px;
-    }
-  }
+.top-page {
+  max-width: 1200px;
 }
 </style>

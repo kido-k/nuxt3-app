@@ -1,6 +1,6 @@
 <template>
   <v-app class="top-layout">
-    <LayoutTopLayoutHeader class="top-layout__header" />
+    <LayoutCommonLayoutHeader class="top-layout__header" />
     <div class="top-layout__contents">
       <slot />
     </div>

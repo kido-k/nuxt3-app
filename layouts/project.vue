@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <LayoutProjectLayoutHeader class="project-layout__header" />
+    <LayoutCommonLayoutHeader class="project-layout__header" />
     <v-layout class="project-layout__body">
       <LayoutProjectLayoutSideMenu />
       <slot />
