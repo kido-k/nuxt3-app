@@ -12,6 +12,14 @@
         class="projects__col__card edited-project"
         @click="transitionPage(project.projectId)"
       >
+        <v-btn
+          icon
+          flat
+          class="projects__col__card__delete"
+          @click.stop="deleteProject(project.projectId)"
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
         <v-card-title class="projects__col__card__title">
           {{ project.setting.name }}
         </v-card-title>
@@ -32,10 +40,7 @@
     </v-col>
   </v-row>
   <v-dialog v-model="dialog" width="600">
-    <page-top-page-add-project-dialog
-      @update-projects="updateProjects"
-      @close-dialog="dialog = false"
-    />
+    <page-top-page-add-project-dialog @close-dialog="dialog = false" />
   </v-dialog>
 </template>
 
@@ -44,18 +49,19 @@ interface Props {
   projects: Array<Project>
 }
 const props = defineProps<Props>()
-const emit = defineEmits(['update-projects'])
 
 const dialog = ref<boolean>(false)
-
-function updateProjects() {
-  emit('update-projects')
-}
 
 function transitionPage(projectId: string) {
   navigateTo({
     path: `/project/${projectId}`,
   })
+}
+
+async function deleteProject(projectId: string) {
+  const { setProjects, deleteProject } = useProjects()
+  await deleteProject(projectId)
+  await setProjects()
 }
 </script>
 
@@ -65,7 +71,7 @@ function transitionPage(projectId: string) {
     &__card {
       height: 300px;
       max-width: 360px;
-      padding: 24px;
+      padding: 40px 24px 24px 24px;
       border-radius: 8px;
       &__title {
         font-size: 24px;
@@ -74,6 +80,11 @@ function transitionPage(projectId: string) {
       &__project-id {
         margin: 4px 0 0 0;
         color: #8b8b8b;
+      }
+      &__delete {
+        position: absolute;
+        top: 0;
+        right: 12px;
       }
     }
   }

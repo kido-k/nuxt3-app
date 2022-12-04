@@ -14,6 +14,11 @@ export const useProjects = () => {
     })
   }
 
+  async function deleteProject(projectId:string) {
+    const { deleteDocData } = useFirestore()
+    await deleteDocData('project', projectId)
+  }
+
   function getProjects() {
     return projects.value
   }
@@ -25,6 +30,7 @@ export const useProjects = () => {
 
   return {
     setProjects,
+    deleteProject,
     getProjects,
     getCurrentProject,
   }

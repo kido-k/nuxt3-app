@@ -6,21 +6,6 @@
 const route = useRoute()
 
 definePageMeta({
-  layout: 'project',
+  layout: 'top',
 })
-
-// onMounted(async () => {
-//   const { projects, updateProjects } = useProjects()
-
-//   let currentProject: Project | null
-//   currentProject = await getProject()
-//   console.log({ currentProject })
-//   useState('currentProject', () => currentProject)
-// })
-
-// async function getProject() {
-//   const { getDocData } = useFirestore()
-//   const _projects = await getDocData('project', route.params.projectId)
-//   return _projects
-// }
 </script>

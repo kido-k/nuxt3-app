@@ -1,10 +1,7 @@
 <template>
   <v-container class="top-page">
     <client-only>
-      <page-top-page-projects
-        :projects="projects"
-        @update-projects="updateProjects"
-      />
+      <page-top-page-projects :projects="projects" />
     </client-only>
   </v-container>
 </template>
@@ -15,16 +12,11 @@ definePageMeta({
   middleware: 'auth',
 })
 
-let projects: Project[] = []
-if (!process.server) {
-  await updateProjects()
-}
+const { getProjects } = useProjects()
 
-async function updateProjects() {
-  const { getProjects, setProjects } = useProjects()
-  await setProjects()
-  projects = await getProjects()
-}
+const projects = computed(() => {
+  return getProjects()
+})
 </script>
 
 <style lang="scss" scoped>

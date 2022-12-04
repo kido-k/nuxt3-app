@@ -8,7 +8,16 @@
   </v-app>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+onMounted(async () => {
+  await updateProjects()
+})
+
+async function updateProjects() {
+  const { setProjects } = useProjects()
+  await setProjects()
+}
+</script>
 
 <style lang="scss">
 .project-layout {
