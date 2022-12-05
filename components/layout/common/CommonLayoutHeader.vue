@@ -42,6 +42,8 @@ function transitionTopPage() {
   background-color: #6200ff;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0 4px 4px 0 rgb(0 0 0 / 50%);
+  z-index: 10;
   &__logo {
     font-size: 24px;
     font-weight: bold;

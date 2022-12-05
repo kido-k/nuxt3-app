@@ -1,11 +1,21 @@
 <template>
-  <h1>Project {{ route.params.projectId }}</h1>
+  <div class="project-page">
+    <client-only>
+      <PageProjectPageLayout />
+    </client-only>
+  </div>
 </template>
 
 <script setup lang="ts">
-const route = useRoute()
-
 definePageMeta({
-  layout: 'top',
+  layout: 'project',
+  middleware: 'auth',
 })
 </script>
+
+<style lang="scss" scoped>
+.project-page {
+  width: 100%;
+  padding: 40px;
+}
+</style>

@@ -7,7 +7,8 @@ import {
 	getDoc,
     getDocs,
 	addDoc,
-	deleteDoc
+	deleteDoc,
+	serverTimestamp
 } from 'firebase/firestore';
 
 export const useFirestore = () => {
@@ -26,14 +27,22 @@ export const useFirestore = () => {
 		}
 	}
 
-	const addDocData = async (collectionKey: string, collectionData: object) => {
-		const colRef = collection(db, collectionKey)
+	const addDocData = async (addData: { collectionKey: string, collectionData: object }, useTimestamp = false) => {
+		const colRef = collection(db, addData.collectionKey)
+		const collectionData = useTimestamp ? Object.assign(addData.collectionData, {timestamp: serverTimestamp()}) : addData.collectionData
 		const docRef = await addDoc(colRef, collectionData)
 		return docRef.id
 	}
 
-	const deleteDocData = async (collectionKey: string, docKey: string) => {
-		const docRef = doc(db, collectionKey, docKey)
+	const addDocInDocData = async (addData: { collectionKey: string, docKey: string, newCollectionKey: string, collectionData: object }, useTimestamp = false) => {
+		const colRef = collection(db, addData.collectionKey, addData.docKey, addData.newCollectionKey)
+		const collectionData = useTimestamp ? Object.assign(addData.collectionData, {timestamp: serverTimestamp()}) : addData.collectionData
+		const docRef = await addDoc(colRef, collectionData)
+		return docRef.id
+	}
+
+	const deleteDocData = async (deleteData: { collectionKey: string, docKey: string }) => {
+		const docRef = doc(db, deleteData.collectionKey, deleteData.docKey)
 		await deleteDoc(docRef);
 	}
 
@@ -64,9 +73,25 @@ export const useFirestore = () => {
 		})
 		return _docData
 	}
+	const getDocInFieldData = async (collectionKey: string, docKey: string ) => {
+		const _query = query(
+				collection(db, collectionKey, docKey, ),
+			)
+
+		const querySnapshot = await getDocs(_query);
+		const _docData: object[] = []
+		querySnapshot.forEach((doc) => {
+			_docData.push({
+			projectId: doc.id,
+			setting: doc.data()
+			});
+		})
+		return _docData
+	}
 	return {
 		getDocData,
-      	addDocData,
+		addDocData,
+		addDocInDocData,
 		deleteDocData,
       	getFieldData,
     }

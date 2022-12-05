@@ -2,7 +2,7 @@
   <v-card class="new-project-dialog">
     <v-card-title> add new project </v-card-title>
     <v-text-field v-model="projectName" label="project name" class="mt-2" />
-    <v-btn color="primary" @click="addNewProject()">save</v-btn>
+    <v-btn color="primary" @click="addProject()">save</v-btn>
   </v-card>
 </template>
 
@@ -10,14 +10,11 @@
 const emit = defineEmits(['update-projects', 'close-dialog'])
 const projectName = ref<string>('')
 
-const { addDocData } = useFirestore()
+const { addNewProject } = useProjects()
 
-async function addNewProject() {
-  const projectId = await addDocData('project', {
-    name: projectName.value,
-    timestamp: new Date(),
-  })
-  updateProjects()
+async function addProject() {
+  const projectId = await addNewProject(projectName.value)
+  await updateProjects()
   transitionPage(projectId)
   emit('close-dialog')
 }

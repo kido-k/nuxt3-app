@@ -1,10 +1,10 @@
 <template>
   <v-app>
     <LayoutCommonLayoutHeader class="project-layout__header" />
-    <v-layout class="project-layout__body">
+    <div class="project-layout__body">
       <LayoutProjectLayoutSideMenu />
       <slot />
-    </v-layout>
+    </div>
   </v-app>
 </template>
 
@@ -22,6 +22,7 @@ async function updateProjects() {
 <style lang="scss">
 .project-layout {
   &__body {
+    display: flex;
     height: 100%;
   }
 }

@@ -14,9 +14,45 @@ export const useProjects = () => {
     })
   }
 
+  async function addNewProject(projectName: string) {
+    const { addDocData, addDocInDocData } = useFirestore()
+    const projectId =  await addDocData(
+      {
+        collectionKey: 'project',
+        collectionData: {
+          name: projectName,
+          waitTime: 30,
+          sections: [
+            {
+              name: '',
+              pageUrl: '',
+              scenario: []
+            }
+          ],
+        },
+      },
+      true
+    )
+
+    await addDocInDocData(
+      {
+        collectionKey: 'project',
+        docKey: projectId,
+        newCollectionKey: 'section',
+        collectionData: {
+          name: '',
+          scenario: [],
+        },
+      },
+      true
+    )
+
+    return projectId
+  }
+
   async function deleteProject(projectId:string) {
     const { deleteDocData } = useFirestore()
-    await deleteDocData('project', projectId)
+    await deleteDocData({ collectionKey: 'project', docKey: projectId })
   }
 
   function getProjects() {
@@ -30,6 +66,7 @@ export const useProjects = () => {
 
   return {
     setProjects,
+    addNewProject,
     deleteProject,
     getProjects,
     getCurrentProject,
