@@ -40,7 +40,7 @@
     </v-col>
   </v-row>
   <v-dialog v-model="dialog" width="600">
-    <page-top-page-add-project-dialog @close-dialog="dialog = false" />
+    <PageTopPageAddProjectDialog @close-dialog="dialog = false" />
   </v-dialog>
 </template>
 

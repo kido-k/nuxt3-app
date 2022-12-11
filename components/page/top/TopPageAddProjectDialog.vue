@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits(['update-projects', 'close-dialog'])
+const emit = defineEmits(['close-dialog'])
 const projectName = ref<string>('')
 
 const { addNewProject } = useProjects()

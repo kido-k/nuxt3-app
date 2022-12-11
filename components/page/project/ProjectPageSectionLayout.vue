@@ -1,13 +1,32 @@
 <template>
-  <v-expansion-panels>
-    <v-expansion-panel v-for="(section, index) in sections" :key="index">
-      <v-expansion-panel-header> {{ section.name }} </v-expansion-panel-header>
-      <v-expansion-panel-content>
-        <v-text-field v-model="section.pageUrl" />
-        <div v-for="(scenario, sIndex) in section.scenario" :key="sIndex">
-          {{ scenario }}
-        </div>
-      </v-expansion-panel-content>
+  <v-expansion-panels v-model="panels" multiple>
+    <v-expansion-panel
+      v-for="(section, index) in sections"
+      :key="index"
+      class="sections"
+    >
+      <v-expansion-panel-title class="section__title">
+        <PageProjectPageSectionName
+          :section-name="section.name"
+          :index="index"
+          @update-section-title="updateSectionTitle"
+        />
+      </v-expansion-panel-title>
+      <v-expansion-panel-text>
+        <PageProjectPageSectionTargetPage
+          :section-target="section.targetPage"
+          :index="index"
+          @update-section-target-page-url="updateSectionTargetPageUrl"
+          @update-section-target-page-conditions="
+            updateSectionTargetPageConditions
+          "
+        />
+        <PageProjectPageSectionTestScenaio
+          :section-scenario="section.scenario"
+          :index="index"
+          @update-section-page-url="updateSectionTargetPageUrl"
+        />
+      </v-expansion-panel-text>
     </v-expansion-panel>
   </v-expansion-panels>
 </template>
@@ -18,9 +37,30 @@ interface Props {
 }
 const props = defineProps<Props>()
 
-const sections = computed(() => {
-  return props.sections
-})
+const panels = ref([])
+const sections = ref(props.sections)
+
+function updateSectionTitle(title: string, index: number) {
+  const section = sections.value[index]
+  section.name = title
+}
+
+function updateSectionTargetPageUrl(pageUrl: string, index: number) {
+  const section = sections.value[index]
+  section.targetPage.url = pageUrl
+}
+
+function updateSectionTargetPageConditions(conditions: [], index: number) {
+  const section = sections.value[index]
+  section.targetPage.conditions = conditions
+}
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.section__title {
+  padding: 12px 24px;
+  & > .v-expansion-panel-title__overlay {
+    border-radius: 8px;
+  }
+}
+</style>
